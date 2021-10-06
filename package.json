@@ -1,0 +1,19 @@
+{
+  "name": "baby-tester",
+  "version": "0.0.1",
+  "description": "Application de gestion de parties de BabyFoot réalisé dans le cadre d'un test technique",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/all-lala/baby_tester.git"
+  },
+  "author": "Aurelien LABY",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/all-lala/baby_tester/issues"
+  },
+  "homepage": "https://github.com/all-lala/baby_tester#readme"
+}
