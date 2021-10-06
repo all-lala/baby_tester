@@ -24,11 +24,6 @@ Migration.generate()
 server.listen(port)
 server.on('error', console.error)
 server.on('listening', () => {
-  app._router.stack.forEach(function (r) {
-    if (r.route && r.route.path) {
-      console.log(r.route.path)
-    }
-  })
   const address = server.address()
   const listening =
     typeof address === 'string' ? 'pipe ' + address : 'port ' + address.port

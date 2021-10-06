@@ -4,7 +4,8 @@
   "description": "Application de gestion de parties de BabyFoot réalisé dans le cadre d'un test technique",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "prod": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,6 +22,7 @@
     "dotenv": "^10.0.0",
     "dotenv-flow": "^3.2.0",
     "express": "^4.17.1",
+    "nodemon": "^2.0.13",
     "pg": "^8.7.1",
     "pgtools": "^0.3.2",
     "xss": "^1.0.9"

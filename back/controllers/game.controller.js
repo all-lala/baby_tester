@@ -1,18 +1,48 @@
+const GameService = require('../services/game.service')
+const xss = require('xss')
+
 class GameController {
-  static list(req, res) {
-    res.send('NOT IMPLEMENTED: Game list')
+  /**
+   * List games
+   */
+  static async list(req, res) {
+    res.json(await GameService.find(req?.body?.pagination))
   }
 
-  static add(req, res) {
-    res.send('NOT IMPLEMENTED: Game add')
+  /**
+   * Add new game
+   */
+  static async add(req, res) {
+    if (req?.body?.name) {
+      res.json(await GameService.add(xss(req.body.name)))
+    } else {
+      res.status(400)
+      res.end()
+    }
   }
 
-  static delete(req, res) {
-    res.send('NOT IMPLEMENTED: Game delete')
+  /**
+   * Delete game
+   */
+  static async delete(req, res) {
+    if (await GameService.deleteById(Number(req?.params?.id))) {
+      res.send('OK')
+    } else {
+      res.status(400)
+      res.end()
+    }
   }
 
-  static finish(req, res) {
-    res.send('NOT IMPLEMENTED: Game finish')
+  /**
+   * Toggle finised state game
+   */
+  static async finish(req, res) {
+    if (req?.params?.id) {
+      res.json(await GameService.toggleFinishedById(req?.params?.id))
+    } else {
+      res.status(400)
+      res.end()
+    }
   }
 }
 

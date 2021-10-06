@@ -9,9 +9,9 @@ router.get('/', GameController.list)
 router.post('/', GameController.add)
 
 /* Delete game by ID */
-router.delete('/:id', GameController.delete)
+router.delete('/:id([0-9]+)', GameController.delete)
 
 /* Finish game by ID */
-router.put('/:id', GameController.finish)
+router.put('/:id([0-9]+)/finish', GameController.finish)
 
 module.exports = router

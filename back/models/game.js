@@ -1,5 +1,3 @@
-var xss = require('xss')
-
 class Game {
   #id
   #name
@@ -24,7 +22,7 @@ class Game {
   }
 
   set name(val) {
-    this.#name = xss(val)
+    this.#name = val
   }
 
   get finish() {
@@ -33,6 +31,14 @@ class Game {
 
   set finish(val) {
     this.#finish = val
+  }
+
+  toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+      finish: this.finish,
+    }
   }
 }
 

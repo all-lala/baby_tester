@@ -1,13 +1,14 @@
 const GameDAO = require('../dao/game.dao')
-const Game = require('../models.game')
+const Game = require('../models/game')
 
 class GameService {
   /**
-   * Find all games
+   * Find games
    * @returns
    */
-  static findAll() {
-    return GameDAO.findAll().map((game) => {
+  static async find(pagination) {
+    const games = await GameDAO.find(pagination)
+    return games.map((game) => {
       return Object.assign(new Game(), game)
     })
   }
@@ -18,9 +19,10 @@ class GameService {
    * @param {boolean} finished
    * @returns
    */
-  static add(name, finished = false) {
+  static async add(name, finished = false) {
     const game = new Game(name)
-    return GameDAO.add(game, finished)
+    const gameSaved = await GameDAO.add(game, finished)
+    return Object.assign(new Game(), gameSaved)
   }
 
   /**
@@ -28,8 +30,8 @@ class GameService {
    * @param {number} id
    * @returns
    */
-  static deleteById(id) {
-    return !!GameDAO.deleteById(id)
+  static async deleteById(id) {
+    return GameDAO.deleteById(id)
   }
 
   /**
@@ -38,8 +40,8 @@ class GameService {
    * @param {boolean} state
    * @returns
    */
-  static setFinishedById(id, state = true) {
-    return !!GameDAO.setFinishedById(id, state)
+  static async toggleFinishedById(id) {
+    return GameDAO.toggleFinishedById(id)
   }
 }
 
