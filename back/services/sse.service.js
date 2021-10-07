@@ -38,7 +38,7 @@ class SSE {
    * @param {*} clientClosed
    */
   clientClose(clientClosed) {
-    console.log(`${clientClosed.clientId} Connection closed`)
+    console.info(`${clientClosed.clientId} Connection closed`)
     this.#clients = this.#clients.filter(
       (client) => client.clientId !== clientClosed.clientId
     )
@@ -63,12 +63,9 @@ class SSE {
    * @param {number} retry
    */
   sendMessage(client, message, id = 0, type, retry) {
-    if (id) {
-      client.context.write(`id: ${id}\n`)
-    }
-    if (type) {
-      client.context.write(`event: ${type}\n`)
-    }
+    client.context.write(`id: ${id || Date.now()}\n`)
+    client.context.write(`event: ${type || 'message'}\n`)
+
     if (retry) {
       client.context.write(`retry: ${retry}\n`)
     }

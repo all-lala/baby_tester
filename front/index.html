@@ -6,9 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/style.css" />
     <title>Baby Tester</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
   <body>
-    <p class="title">Baby Tester</p>
+    <header>
+      <h1 class="title">Baby Tester</h1>
+    </header>
+    <div id="game-zone" class="elevation-1">
+      <h2 id="game-zone-title" class="elevation-2">Liste des parties</h2>
+      <div id="div-add-game">
+        <form id="form-add-game">
+          <label for="input-add-game">Ajouter un match :</label>
+          <input
+            id="input-add-game"
+            type="text"
+            placeholder="Nom de la partie"
+          />
+          <div><button id="btn-add-game">Ajouter</button></div>
+        </form>
+      </div>
+      <ul id="game-list"></ul>
+    </div>
+
+    <template id="template-game-element-line">
+      <li class="game-list-element">
+        <input type="checkbox" class="checkbox-game-finished" />
+        <p class="div-players-names">Players Names</p>
+        <div><button class="btn-delete-game">Supprimer</button></div>
+        <div class="game-list-loading-action">
+          <p>Action en cours ...</p>
+        </div>
+      </li>
+    </template>
   </body>
-  <script src="js/index.js" />
+  <script src="js/index.js" type="module"></script>
 </html>

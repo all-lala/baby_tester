@@ -1,4 +1,108 @@
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 6rem;
+}
+
 .title {
-  font-size: 24px;
   color: #686868;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+#game-zone {
+  border: 1px solid gray;
+  border-radius: 0.5rem;
+  padding: 1.5rem 1rem 1.5rem 1rem;
+  position: relative;
+}
+
+#game-zone-title {
+  position: absolute;
+  top: -2.5rem;
+  left: 2rem;
+  border-radius: 0.5rem;
+  background-color: rgb(58, 58, 223);
+  color: white;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+#div-add-game {
+  display: flex;
+  justify-content: space-around;
+}
+
+#form-add-game {
+  width: 100%;
+  display: flex;
+  margin-top: 1rem;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 1.05rem;
+}
+
+#input-add-game {
+  width: 80%;
+  padding: 1rem;
+}
+
+#btn-add-game {
+  padding: 1rem;
+}
+
+#game-list {
+  list-style: none;
+  padding: 0px;
+  width: 100%;
+}
+
+.game-list-element {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem 0 1rem;
+  margin-top: 3px;
+  background-color: hsl(224, 100%, 80%);
+  border-radius: 0.2rem;
+}
+
+.game-list-element:hover {
+  background-color: hsl(224, 100%, 60%);
+  color: white;
+}
+
+.game-list-element-finished {
+  background-color: hsl(0, 100%, 60%);
+  color: white;
+  text-decoration-line: line-through;
+}
+
+.game-list-element-finished:hover {
+  background-color: hsl(0, 100%, 70%);
+}
+
+.game-list-loading-action {
+  position: absolute;
+  display: none;
+  text-align: center;
+  top: 0px;
+  left: 0px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: gray;
+  color: aliceblue;
+  border-radius: 0.2rem;
+}
+
+.game-list-loading-action-delete {
+  background-color: rgb(163, 4, 4);
+}
+
+.elevation-1 {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+.elevation-2 {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
