@@ -2,29 +2,27 @@ const db = require('../services/db')
 
 class GameDAO {
   static TABLE_NAME = 'game'
+  static PAGINATION_BASE_LIMIT = 20
 
   /**
    * Find all games
    * @returns
    */
   static find(pagination) {
-    const limit = pagination.byPage || 1
-    const offset = (pagination.page - 1) * pagination.byPage || 0
+    const limit = pagination?.byPage || GameDAO.PAGINATION_BASE_LIMIT
+    const offset = pagination?.page ? (pagination.page - 1) * limit : 0
     return db
       .query(
         `
         SELECT id, name, finish
         FROM ${this.TABLE_NAME}
-        ORDER BY id DESC
+        ORDER BY id ASC
         LIMIT $1
         OFFSET $2
       ;`,
         [limit, offset]
       )
-      .then((result) => {
-        console.log(result.rowCount)
-        return result.rows
-      })
+      .then((result) => result.rows)
   }
 
   /**

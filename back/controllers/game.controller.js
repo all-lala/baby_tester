@@ -1,5 +1,7 @@
 const GameService = require('../services/game.service')
 const xss = require('xss')
+const SSE = require('../services/sse.service')
+const SSE_MESSAGE_LIST = require('../utils/sse.messagelist')
 
 class GameController {
   /**
@@ -14,7 +16,9 @@ class GameController {
    */
   static async add(req, res) {
     if (req?.body?.name) {
-      res.json(await GameService.add(xss(req.body.name)))
+      const newGame = await GameService.add(xss(req.body.name))
+      res.json(newGame)
+      SSE.broadcastMessage(newGame, Date.now(), SSE_MESSAGE_LIST.gameAdded)
     } else {
       res.status(400)
       res.end()
@@ -25,12 +29,13 @@ class GameController {
    * Delete game
    */
   static async delete(req, res) {
-    if (await GameService.deleteById(Number(req?.params?.id))) {
-      res.send('OK')
-    } else {
-      res.status(400)
-      res.end()
-    }
+    await GameService.deleteById(Number(req?.params?.id))
+    SSE.broadcastMessage(
+      req?.params?.id,
+      Date.now(),
+      SSE_MESSAGE_LIST.gameDeleted
+    )
+    res.send('OK')
   }
 
   /**
@@ -38,7 +43,13 @@ class GameController {
    */
   static async finish(req, res) {
     if (req?.params?.id) {
-      res.json(await GameService.toggleFinishedById(req?.params?.id))
+      const game = await GameService.toggleFinishedById(req?.params?.id)
+      res.json(game)
+      SSE.broadcastMessage(
+        game,
+        Date.now(),
+        SSE_MESSAGE_LIST.gameGameFinishToggle
+      )
     } else {
       res.status(400)
       res.end()
