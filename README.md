@@ -22,3 +22,7 @@ npm i
 ## Lancement
 
 npm run start
+
+## Accès au site
+
+http://localhost:8080 (adresse locale : HTTP_PORT)
