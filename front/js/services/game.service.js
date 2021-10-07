@@ -7,7 +7,10 @@ export class GameService {
   static async list() {
     return await axios
       .get(`/${this.GAME_URL}`)
-      .then((response) => response.data)
+      .then((response) => ({
+        data: response.data,
+        countNotFinished: response.headers['resource-count'],
+      }))
   }
 
   /**

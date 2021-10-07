@@ -1,11 +1,10 @@
+import { gameManager } from '../services/game.manager.js'
 import { EventBus } from './eventbus.js'
-import { GameManager } from '../services/game.manager.js'
-
-const gameManager = new GameManager()
 
 const GAME_EVENTS = {
   addGameButtonClicked: 'addGameButtonClicked',
   newList: 'newList',
+  countNotFinished: 'countNotFinished',
   addGame: 'addGame',
   removeGame: 'removeGame',
   finishedGame: 'finishedGame',
@@ -16,6 +15,13 @@ const GAME_EVENTS = {
  */
 EventBus.addEventListener(GAME_EVENTS.newList, (event) =>
   gameManager.initList(event.detail)
+)
+
+/**
+ * When count of not finished is dispatched
+ */
+EventBus.addEventListener(GAME_EVENTS.countNotFinished, (event) =>
+  gameManager.onCountNotFinishedChange(event.detail)
 )
 
 /**

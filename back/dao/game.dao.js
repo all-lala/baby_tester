@@ -5,6 +5,23 @@ class GameDAO {
   static PAGINATION_BASE_LIMIT = 20
 
   /**
+   * Count total games
+   * @param {boolean} onlyNotfinished: count only not finished
+   * @returns
+   */
+  static count(onlyNotfinished) {
+    return db
+      .query(
+        `
+        SELECT count(1)
+        FROM ${this.TABLE_NAME}
+        ${onlyNotfinished ? 'WHERE not finish' : ''}
+      ;`
+      )
+      .then((result) => result.rows[0].count)
+  }
+
+  /**
    * Find all games
    * @returns
    */

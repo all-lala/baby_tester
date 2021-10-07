@@ -3,6 +3,15 @@ const Game = require('../models/game')
 
 class GameService {
   /**
+   * Count total games
+   * @param {boolean} onlyNotfinished: count only not finished
+   * @returns
+   */
+  static async count(onlyNotfinished) {
+    return await GameDAO.count(onlyNotfinished)
+  }
+
+  /**
    * Find games
    * @returns
    */

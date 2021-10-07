@@ -1,0 +1,9 @@
+#countNotFinished h2 {
+  position: absolute;
+  top: -2.5rem;
+  right: -10px;
+  border-radius: 0.5rem;
+  background-color: rgb(58, 58, 223);
+  color: white;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+}
