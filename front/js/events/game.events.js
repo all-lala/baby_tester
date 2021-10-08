@@ -2,10 +2,10 @@ import { gameManager } from '../services/game.manager.js'
 import { EventBus } from './eventbus.js'
 
 const GAME_EVENTS = {
-  addGameButtonClicked: 'addGameButtonClicked',
   newList: 'newList',
   countNotFinished: 'countNotFinished',
   addGame: 'addGame',
+  addGames: 'addGames',
   removeGame: 'removeGame',
   finishedGame: 'finishedGame',
 }
@@ -28,7 +28,7 @@ EventBus.addEventListener(GAME_EVENTS.countNotFinished, (event) =>
  * When game added to list
  */
 EventBus.addEventListener(GAME_EVENTS.addGame, (event) =>
-  gameManager.addToList(event.detail)
+  gameManager.addOne(event.detail)
 )
 
 /**
@@ -45,8 +45,11 @@ EventBus.addEventListener(GAME_EVENTS.finishedGame, (event) =>
   gameManager.setFinisedStatus(event.detail)
 )
 
-EventBus.addEventListener(GAME_EVENTS.addGameButtonClicked, (event) =>
-  gameManager.onBtnAddGameClicked()
+/**
+ * When next list elements added
+ */
+EventBus.addEventListener(GAME_EVENTS.addGames, (event) =>
+  gameManager.addList(event.detail)
 )
 
 export { GAME_EVENTS }

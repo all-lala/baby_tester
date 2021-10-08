@@ -65,13 +65,27 @@
 }
 
 .btn-delete-confirm {
-  background-color: rgb(218, 68, 68);
+  background-color: var(--error-btn-color);
   color: white;
+}
+.btn-delete-confirm:hover {
+  background-color: var(--error-btn-hover-color);
+}
+.btn-delete-confirm:active {
+  background-color: var(--error-btn-hover-color);
 }
 
 .btn-delete-cancel {
-  background-color: rgb(68, 150, 218);
-  color: white;
+  background-color: var(--primary-btn-color);
+  color: var(--primary-btn-text-color);
+}
+
+.btn-delete-cancel:hover {
+  background-color: var(--primary-btn-hover-color);
+}
+
+.btn-delete-cancel:active {
+  background-color: var(--primary-btn-active-color);
 }
 
 .game-list-loading-action-delete {

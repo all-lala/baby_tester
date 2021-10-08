@@ -9,6 +9,39 @@ header {
   height: 6rem;
 }
 
+:root {
+  --primary-block-color: hsl(240, 100%, 55%);
+  --primary-block-text-color: white;
+  --primary-btn-color: hsl(207, 100%, 60%);
+  --primary-btn-hover-color: hsl(207, 100%, 50%);
+  --primary-btn-active-color: hsl(207, 100%, 30%);
+  --primary-btn-text-color: white;
+  --error-btn-text-color: white;
+  --error-btn-color: hsl(0, 100%, 60%);
+  --error-btn-hover-color: hsl(0, 100%, 50%);
+  --error-btn-active-color: hsl(0, 100%, 30%);
+}
+
+.btn-game {
+  border-radius: 0.75rem;
+  border: 1px solid black;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.btn-game.primary {
+  background-color: var(--primary-btn-color);
+  color: var(--primary-btn-text-color);
+}
+
+.btn-game.primary:hover {
+  background-color: var(--primary-btn-hover-color);
+}
+
+.btn-game.primary:active {
+  background-color: var(--primary-btn-active-color);
+}
+
 .title {
   color: #686868;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -27,8 +60,8 @@ header {
   top: -2.5rem;
   left: 2rem;
   border-radius: 0.5rem;
-  background-color: rgb(58, 58, 223);
-  color: white;
+  background-color: var(--primary-block-color);
+  color: var(--primary-block-text-color);
   padding: 0.5rem 1rem 0.5rem 1rem;
 }
 
@@ -57,16 +90,15 @@ header {
   width: 15%;
   height: 100%;
   text-decoration: none;
-  border-radius: 0.75rem;
-  border: 1px solid black;
-  background-color: rgb(68, 150, 218);
-  color: white;
-  padding: 0.5rem 1rem 0.5rem 1rem;
 }
 
 #game-list {
   list-style: none;
   padding: 0px;
+  width: 100%;
+}
+
+#btn-game-next-elements {
   width: 100%;
 }
 

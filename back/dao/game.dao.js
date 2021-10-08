@@ -2,7 +2,7 @@ const db = require('../services/db')
 
 class GameDAO {
   static TABLE_NAME = 'game'
-  static PAGINATION_BASE_LIMIT = 20
+  static PAGINATION_BASE_BY_PAGE = 20
 
   /**
    * Count total games
@@ -26,18 +26,23 @@ class GameDAO {
    * @returns
    */
   static find(pagination) {
-    const limit = pagination?.byPage || GameDAO.PAGINATION_BASE_LIMIT
-    const offset = pagination?.page ? (pagination.page - 1) * limit : 0
+    const preparedStatements = []
+    preparedStatements.push(
+      pagination?.byPage || GameDAO.PAGINATION_BASE_BY_PAGE
+    )
+    if (pagination?.lastId) {
+      preparedStatements.push(pagination?.lastId)
+    }
     return db
       .query(
         `
         SELECT id, name, finish
         FROM ${this.TABLE_NAME}
-        ORDER BY id ASC
+        ${pagination?.lastId ? 'WHERE id < $2' : ''}
+        ORDER BY id DESC
         LIMIT $1
-        OFFSET $2
       ;`,
-        [limit, offset]
+        preparedStatements
       )
       .then((result) => result.rows)
   }

@@ -11,7 +11,7 @@ class GameController {
    */
   static async list(req, res) {
     res.header('Resource-count', await GameService.count(true))
-    res.json(await GameService.find(req?.body?.pagination))
+    res.json(await GameService.find(req?.query))
   }
 
   /**

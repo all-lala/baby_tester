@@ -4,9 +4,9 @@ export class GameService {
   /**
    * List games to show
    */
-  static async list() {
+  static async list(pagination) {
     return await axios
-      .get(`/${this.GAME_URL}`)
+      .get(`/${this.GAME_URL}`, { params: pagination })
       .then((response) => ({
         data: response.data,
         countNotFinished: response.headers['resource-count'],

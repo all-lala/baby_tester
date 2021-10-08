@@ -7,11 +7,14 @@ class GameManager {
   elements = []
   gameList
   notFinished
+  nextElement
 
   constructor() {
     this.getListParent()
     this.setAddGameEvents()
     this.getCountNotFinishedElement()
+    this.getBtnNextElements()
+    this.setNextElementsEvent()
   }
 
   static getInstance() {
@@ -27,7 +30,16 @@ class GameManager {
    */
   initList(list) {
     this.gameList.innerHTML = ''
-    list.forEach((game) => this.addToList(game))
+    this.elements = []
+    this.addList(list)
+  }
+
+  /**
+   * Add list of element
+   * @param {*} list
+   */
+  addList(list) {
+    list.reverse().forEach((game) => this.addOne(game))
   }
 
   /**
@@ -35,19 +47,25 @@ class GameManager {
    * @param {Game} game
    * @returns
    */
-  addToList(game) {
+  addOne(game) {
     if (this.findElementById(game.id)) {
       return
     }
+
     const newElem = document.createElement('game-list-element-component')
     newElem.setAttribute('name', game.name)
-    if (game.finish) {
-      newElem.setAttribute('finish', 'finish')
-    }
+    newElem.setAttribute('finish', game.finish ? 'finish' : '')
     newElem.setAttribute('game-id', game.id)
 
-    this.gameList.prepend(newElem)
+    const elementsBefore = this.elements.filter((elem) => elem.id > game.id)
+    if (elementsBefore.length) {
+      elementsBefore[elementsBefore.length - 1].content.after(newElem)
+    } else {
+      this.gameList.prepend(newElem)
+    }
+
     this.elements.push({ id: game.id, content: newElem })
+    this.elements.sort((a, b) => b.id - a.id)
   }
 
   /**
@@ -77,17 +95,6 @@ class GameManager {
   }
 
   /**
-   * Action on add game
-   */
-  onBtnAddGameClicked() {
-    const name = document.getElementById('input-add-game').value
-    document.getElementById('input-add-game').value = ''
-    GameService.add(name).then((result) =>
-      EventBus.dispatchEvent(GAME_EVENTS.addGame, result)
-    )
-  }
-
-  /**
    * Get parent list element in DOM
    */
   getListParent() {
@@ -107,8 +114,10 @@ class GameManager {
    * Event setting to form and button
    */
   setAddGameEvents() {
-    document.getElementById('btn-add-game').onclick = this.dispatchAddGame
-    document.getElementById('form-add-game').onsubmit = this.dispatchAddGame
+    document.getElementById('btn-add-game').onclick = (event) =>
+      this.dispatchAddGame(event)
+    document.getElementById('form-add-game').onsubmit = (event) =>
+      this.dispatchAddGame(event)
   }
 
   /**
@@ -117,7 +126,21 @@ class GameManager {
    */
   dispatchAddGame(event) {
     event.preventDefault()
-    EventBus.dispatchEvent(GAME_EVENTS.addGameButtonClicked)
+    this.addGame()
+  }
+
+  /**
+   * Action on add game
+   */
+  addGame() {
+    const element = document.getElementById('input-add-game')
+    const name = element.value
+    element.value = ''
+    if (name) {
+      GameService.add(name).then((result) =>
+        EventBus.dispatchEvent(GAME_EVENTS.addGame, result)
+      )
+    }
   }
 
   /**
@@ -132,6 +155,30 @@ class GameManager {
    */
   onCountNotFinishedChange(count) {
     this.notFinished.setAttribute('count', count)
+  }
+
+  /**
+   * Get btn next elements in DOM
+   */
+  getBtnNextElements() {
+    this.nextElement = document.getElementById('btn-game-next-elements')
+    console.log(this.nextElement)
+  }
+
+  /**
+   * Set action on next element clicked
+   */
+  setNextElementsEvent() {
+    this.nextElement.onclick = () => {
+      const lastId = Math.min(...this.elements.map((elem) => elem.id))
+      GameService.list({ lastId }).then((response) => {
+        EventBus.dispatchEvent(
+          GAME_EVENTS.countNotFinished,
+          response.countNotFinished
+        )
+        EventBus.dispatchEvent(GAME_EVENTS.addGames, response.data)
+      })
+    }
   }
 }
 
