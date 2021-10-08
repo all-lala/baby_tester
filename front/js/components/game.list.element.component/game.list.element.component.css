@@ -17,6 +17,9 @@
 .game-list-element-finished {
   background-color: hsl(0, 100%, 60%);
   color: white;
+}
+
+.game-list-element-finished > .div-players-names {
   text-decoration-line: line-through;
 }
 
@@ -24,9 +27,20 @@
   background-color: hsl(0, 100%, 70%);
 }
 
+.div-players-names {
+  flex-grow: 1;
+  padding-left: 1rem;
+}
+
+.btn-delete-game {
+  text-decoration: none;
+}
+
+.game-list-valid-delete,
 .game-list-loading-action {
   position: absolute;
   display: none;
+  justify-content: center;
   text-align: center;
   top: 0px;
   left: 0px;
@@ -35,6 +49,29 @@
   background-color: gray;
   color: aliceblue;
   border-radius: 0.2rem;
+}
+
+.game-list-valid-delete.show,
+.game-list-loading-action.show {
+  display: flex;
+}
+
+.btn-delete-confirm,
+.btn-delete-cancel {
+  margin: 0 0 0 0.5rem;
+  border: none;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.btn-delete-confirm {
+  background-color: rgb(218, 68, 68);
+  color: white;
+}
+
+.btn-delete-cancel {
+  background-color: rgb(68, 150, 218);
+  color: white;
 }
 
 .game-list-loading-action-delete {

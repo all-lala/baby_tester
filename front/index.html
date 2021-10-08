@@ -7,26 +7,30 @@
     <link rel="stylesheet" href="css/style.css" />
     <title>Baby Tester</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link
+      href="http://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+      type="text/css"
+    />
   </head>
   <body>
     <header>
       <h1 class="title">Baby Tester</h1>
     </header>
     <div id="game-zone" class="elevation-1">
-      <h2 id="game-zone-title" class="elevation-2">Liste des parties</h2>
+      <h2 id="game-zone-title" class="elevation-2">Les parties</h2>
       <game-not-finished-count-component
         id="game-not-finished-count"
         count="0"
       ></game-not-finished-count-component>
       <div id="div-add-game">
         <form id="form-add-game">
-          <label for="input-add-game">Ajouter un match :</label>
           <input
             id="input-add-game"
             type="text"
-            placeholder="Nom de la partie"
+            placeholder="Nouvelle partie ..."
           />
-          <div><button id="btn-add-game">Ajouter</button></div>
+          <button id="btn-add-game">Ajouter</button>
         </form>
       </div>
       <ul id="game-list"></ul>
@@ -36,7 +40,14 @@
       <li class="game-list-element">
         <input type="checkbox" class="checkbox-game-finished" />
         <p class="div-players-names">Players Names</p>
-        <div><button class="btn-delete-game">Supprimer</button></div>
+        <div class="div-delete-game">
+          <a href="#" class="btn-delete-game">&#10060;</a>
+        </div>
+        <div class="game-list-valid-delete">
+          <p>Que voulez vous faire :</p>
+          <button class="btn-delete-confirm">Supprimer</button>
+          <button class="btn-delete-cancel">Conserver</button>
+        </div>
         <div class="game-list-loading-action">
           <p>Action en cours ...</p>
         </div>

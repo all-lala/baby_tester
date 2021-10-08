@@ -43,6 +43,8 @@ customElements.define(
         case 'game-id':
           this.setCheckBoxAction()
           this.setDeleteAction()
+          this.setDeleteValidAction()
+          this.setDeleteCancelAction()
           break
       }
     }
@@ -85,11 +87,50 @@ customElements.define(
      * Set action to delete
      */
     setDeleteAction() {
-      this.shadowRoot.children[0].querySelector('.btn-delete-game').onclick =
+      this.shadowRoot.children[0].querySelector('.btn-delete-game').onclick = (
+        event
+      ) => {
+        event.preventDefault()
+        this.showDeleteConfirm()
+      }
+    }
+
+    /**
+     * Set action on delete valid
+     */
+    setDeleteValidAction() {
+      this.shadowRoot.children[0].querySelector('.btn-delete-confirm').onclick =
         () => {
+          this.hideDeleteConfirm()
           this.setLoading('Suppression en cours ...', 'delete')
           this.onBtnGameDeleteClicked(this.getAttribute('game-id'))
         }
+    }
+
+    /**
+     * Set action on delete cancel
+     */
+    setDeleteCancelAction() {
+      this.shadowRoot.children[0].querySelector('.btn-delete-cancel').onclick =
+        () => this.hideDeleteConfirm()
+    }
+
+    /**
+     * Show delete confirm block
+     */
+    showDeleteConfirm() {
+      this.shadowRoot.children[0]
+        .querySelector('.game-list-valid-delete')
+        .classList.add('show')
+    }
+
+    /**
+     * Hide delete confirm block
+     */
+    hideDeleteConfirm() {
+      this.shadowRoot.children[0]
+        .querySelector('.game-list-valid-delete')
+        .classList.remove('show')
     }
 
     /**
@@ -104,7 +145,7 @@ customElements.define(
       if (type === 'delete') {
         loadingBlock.classList.toggle('game-list-loading-action-delete')
       }
-      loadingBlock.style.display = 'block'
+      loadingBlock.classList.add('show')
       loadingBlock.getElementsByTagName('p').innerHTML =
         message || 'Action en cours ...'
     }
@@ -116,7 +157,7 @@ customElements.define(
       const loadingBlock = this.shadowRoot.children[0].querySelector(
         '.game-list-loading-action'
       )
-      loadingBlock.style.display = 'none'
+      loadingBlock.classList.remove('show')
       loadingBlock.className = 'game-list-loading-action'
     }
 
