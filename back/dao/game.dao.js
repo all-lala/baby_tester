@@ -27,18 +27,22 @@ class GameDAO {
    */
   static find(pagination) {
     const preparedStatements = []
-    preparedStatements.push(
-      pagination?.byPage || GameDAO.PAGINATION_BASE_BY_PAGE
-    )
-    if (pagination?.lastId) {
-      preparedStatements.push(pagination?.lastId)
+    const byPage = pagination
+      ? pagination.byPage
+      : GameDAO.PAGINATION_BASE_BY_PAGE
+    const lastId = pagination && pagination.lastId
+    preparedStatements.push(byPage)
+
+    if (lastId) {
+      preparedStatements.push(lastId)
     }
+
     return db
       .query(
         `
         SELECT id, name, finish
         FROM ${this.TABLE_NAME}
-        ${pagination?.lastId ? 'WHERE id < $2' : ''}
+        ${lastId ? 'WHERE id < $2' : ''}
         ORDER BY id DESC
         LIMIT $1
       ;`,

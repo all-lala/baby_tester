@@ -11,7 +11,7 @@ class GameController {
    */
   static async list(req, res) {
     res.header('Resource-count', await GameService.count(true))
-    res.json(await GameService.find(req?.query))
+    res.json(await GameService.find(req.query))
   }
 
   /**
@@ -20,8 +20,9 @@ class GameController {
    * @param {Express.Request} res
    */
   static async add(req, res) {
-    if (req?.body?.name) {
-      const newGame = await GameService.add(xss(req.body.name))
+    const name = req.body && req.body.name
+    if (name) {
+      const newGame = await GameService.add(xss(name))
       const countNotFinished = await GameService.count(true)
       res.json(newGame)
       SSE.broadcastMessage(newGame, Date.now(), SSE_MESSAGE_LIST.gameAdded)
@@ -42,13 +43,10 @@ class GameController {
    * @param {Express.Request} res
    */
   static async delete(req, res) {
-    await GameService.deleteById(Number(req?.params?.id))
+    const id = req.params && req.params.id
+    await GameService.deleteById(Number(id))
     const countNotFinished = await GameService.count(true)
-    SSE.broadcastMessage(
-      req?.params?.id,
-      Date.now(),
-      SSE_MESSAGE_LIST.gameDeleted
-    )
+    SSE.broadcastMessage(id, Date.now(), SSE_MESSAGE_LIST.gameDeleted)
     SSE.broadcastMessage(
       { notFinished: countNotFinished },
       Date.now(),
@@ -63,8 +61,9 @@ class GameController {
    * @param {Express.Request} res
    */
   static async finish(req, res) {
-    if (req?.params?.id) {
-      const game = await GameService.toggleFinishedById(req?.params?.id)
+    const id = req.params && req.params.id
+    if (id) {
+      const game = await GameService.toggleFinishedById(id)
       const countNotFinished = await GameService.count(true)
       res.json(game)
       SSE.broadcastMessage(
