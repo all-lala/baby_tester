@@ -27,12 +27,11 @@ class GameDAO {
    */
   static find(pagination) {
     const preparedStatements = []
-    const byPage = pagination
-      ? pagination.byPage
-      : GameDAO.PAGINATION_BASE_BY_PAGE
+    const byPage =
+      (pagination && pagination.byPage) || GameDAO.PAGINATION_BASE_BY_PAGE
     const lastId = pagination && pagination.lastId
-    preparedStatements.push(byPage)
 
+    preparedStatements.push(byPage)
     if (lastId) {
       preparedStatements.push(lastId)
     }
